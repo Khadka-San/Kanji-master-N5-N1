@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1020">
+  <title>Welcome Back | Kanji-Master</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: rgba(17, 25, 48, .82);
+      --panel-border: rgba(255,255,255,.10);
+      --muted: #9ba8c7;
+      --text: #f5f7ff;
+      --accent: #8b7cff;
+      --accent2: #4de1c1;
+      --input: rgba(255,255,255,.055);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 28px;
+      display: grid;
+      place-items: center;
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(ellipse at 15% 10%, rgba(107, 92, 255, .24), transparent 34%),
+        radial-gradient(ellipse at 90% 85%, rgba(40, 220, 184, .13), transparent 30%),
+        var(--bg);
+    }
+    button, input { font: inherit; }
+    .shell {
+      width: min(100%, 1000px);
+      min-height: 620px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+      border: 1px solid var(--panel-border);
+      border-radius: 28px;
+      background: rgba(13, 19, 38, .78);
+      box-shadow: 0 30px 100px rgba(0,0,0,.42);
+      backdrop-filter: blur(20px);
+    }
+    .showcase {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 42px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 75% 24%, rgba(139,124,255,.36), transparent 30%),
+        linear-gradient(145deg, rgba(99, 87, 225, .20), rgba(77,225,193,.06));
+      border-right: 1px solid var(--panel-border);
+    }
+    .showcase::before, .showcase::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .showcase::before { width: 350px; height: 350px; right: -145px; top: 115px; }
+    .showcase::after { width: 250px; height: 250px; right: -95px; top: 165px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: .12em; font-size: 14px; }
+    .brand-mark {
+      width: 38px; height: 38px; display: grid; place-items: center;
+      border-radius: 13px; color: #0b1020; font-size: 20px; font-weight: 900;
+      background: linear-gradient(135deg, var(--accent2), #b5aaff);
+      box-shadow: 0 8px 26px rgba(77,225,193,.22);
+    }
+    .hero { position: relative; z-index: 1; margin: auto 0; padding: 44px 0; }
+    .eyebrow { color: var(--accent2); text-transform: uppercase; letter-spacing: .18em; font-size: 11px; font-weight: 800; }
+    h1 { max-width: 390px; margin: 17px 0 18px; font-size: clamp(34px, 4vw, 48px); line-height: 1.08; letter-spacing: -.045em; }
+    .hero p { max-width: 350px; margin: 0; color: #b3bfd9; line-height: 1.75; font-size: 14px; }
+    .feature-list { display: grid; gap: 14px; margin-top: 32px; }
+    .feature { display: flex; align-items: center; gap: 11px; color: #dce4fa; font-size: 13px; }
+    .feature-icon { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 9px; background: rgba(255,255,255,.08); color: var(--accent2); }
+    .showcase-foot { color: #8390b0; font-size: 11px; }
+    .form-side { display: flex; align-items: center; justify-content: center; padding: 48px; }
+    .form-wrap { width: 100%; max-width: 365px; }
+    .mobile-brand { display: none; }
+    .form-head { margin-bottom: 28px; }
+    .form-head h2 { margin: 0 0 9px; font-size: 29px; letter-spacing: -.035em; }
+    .form-head p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .role-label, .field-label { display: block; margin-bottom: 10px; color: #dce3f6; font-size: 12px; font-weight: 700; }
+    .roles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 23px; padding: 5px; border: 1px solid var(--panel-border); border-radius: 14px; background: rgba(0,0,0,.13); }
+    .roles button {
+      border: 1px solid transparent; border-radius: 10px; padding: 11px 8px;
+      color: #aab6d2; background: transparent; cursor: pointer; font-size: 12px; font-weight: 750;
+      transition: .2s ease;
+    }
+    .roles button.active { color: white; border-color: rgba(139,124,255,.35); background: rgba(139,124,255,.18); box-shadow: inset 0 0 0 1px rgba(139,124,255,.06); }
+    .field { margin-bottom: 17px; }
+    .field label { display: block; margin-bottom: 8px; color: #dce3f6; font-size: 12px; font-weight: 700; }
+    .field input {
+      width: 100%; min-height: 47px; padding: 0 14px; border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.12); outline: none;
+      background: var(--input); color: var(--text); transition: border-color .2s, box-shadow .2s;
+    }
+    .field input::placeholder { color: #667392; }
+    .field input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(139,124,255,.15); }
+    .field input:-webkit-autofill { -webkit-text-fill-color: var(--text); transition: background-color 9999s ease-in-out 0s; }
+    .password-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .password-row label { margin: 0; }
+    .password-row span { color: #8f9dbb; font-size: 11px; }
+    .submit {
+      width: 100%; min-height: 49px; margin-top: 7px; border: 0; border-radius: 12px;
+      color: #0b1020; font-weight: 850; font-size: 13px; cursor: pointer;
+      background: linear-gradient(100deg, #9d91ff, #65e8d0);
+      box-shadow: 0 10px 28px rgba(111, 141, 255, .18); transition: transform .2s, filter .2s;
+    }
+    .submit:hover { transform: translateY(-1px); filter: brightness(1.06); }
+    .submit:active { transform: translateY(0); }
+    .switch-line { margin: 22px 0 0; text-align: center; color: var(--muted); font-size: 12px; }
+    .switch-line button { padding: 0; border: 0; background: none; color: #b5aaff; cursor: pointer; font-weight: 800; }
+    .notice { display: none; margin: 0 0 16px; padding: 11px 12px; border-radius: 10px; font-size: 12px; line-height: 1.5; }
+    .notice.show { display: block; }
+    .notice.error { color: #ffb8c0; background: rgba(255,83,112,.10); border: 1px solid rgba(255,83,112,.24); }
+    .notice.success { color: #9bf4d8; background: rgba(77,225,193,.09); border: 1px solid rgba(77,225,193,.22); }
+    [hidden] { display: none !important; }
+    @media (max-width: 760px) {
+      body { padding: 14px; }
+      .shell { max-width: 480px; min-height: auto; grid-template-columns: 1fr; border-radius: 22px; }
+      .showcase { display: none; }
+      .form-side { padding: 34px 25px 30px; }
+      .mobile-brand { display: flex; margin-bottom: 34px; }
+      .form-head h2 { font-size: 27px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <aside class="showcase" aria-label="Welcome">
+      <div class="brand"><span class="brand-mark">K</span><span>Kanji-Master</span></div>
+      <div class="hero">
+        <div class="eyebrow">Your learning space</div>
+        <h1>Make every practice session count.</h1>
+        <p>Sign in to continue your learning journey, track your progress, and reach your next goal.</p>
+        <div class="feature-list">
+          <div class="feature"><span class="feature-icon">✓</span><span>Keep your progress in one place</span></div>
+          <div class="feature"><span class="feature-icon">↗</span><span>Build consistent learning habits</span></div>
+          <div class="feature"><span class="feature-icon">✦</span><span>Learn at your own pace</span></div>
+        </div>
+      </div>
+      <div class="showcase-foot">A focused space for your next step.</div>
+    </aside>
+
+    <section class="form-side">
+      <div class="form-wrap">
+        <div class="brand mobile-brand"><span class="brand-mark">N</span><span>Kanji-Master</span></div>
+        <header class="form-head">
+          <h2 id="heading">Welcome back</h2>
+          <p id="subtitle">Enter your details to sign in to your account.</p>
+        </header>
+
+        <div id="notice" class="notice" role="status" aria-live="polite"></div>
+
+        <form id="form" novalidate>
+          <span class="role-label">Sign in as</span>
+          <div class="roles" role="group" aria-label="Choose account type">
+            <button class="tab active" type="button" data-role="student" aria-pressed="true">Student</button>
+            <button class="tab" type="button" data-role="teacher" aria-pressed="false">Teacher</button>
+          </div>
+
+          <div class="field" id="nameWrap" hidden>
+            <label for="name">Full name</label>
+            <input id="name" name="name" type="text" placeholder="Your full name" autocomplete="name">
+          </div>
+
+          <div class="field" id="teacherWrap" hidden>
+            <label for="teacherCode">Teacher access code</label>
+            <input id="teacherCode" name="teacherCode" type="password" placeholder="Enter teacher code" autocomplete="off">
+          </div>
+
+          <div class="field">
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+          </div>
+
+          <div class="field">
+            <div class="password-row">
+              <label for="password">Password</label>
+              <span>Keep it secure</span>
+            </div>
+            <input id="password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+          </div>
+
+          <button id="submit" class="submit" type="submit">Sign in</button>
+        </form>
+
+        <p class="switch-line"><span id="switchText">New here?</span> <button id="switch" type="button">Create an account</button></p>
+      </div>
+    </section>
+  </main>
+  <script src="js/auth.js"></script>
+</body>
+</html>

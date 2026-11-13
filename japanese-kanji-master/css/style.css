@@ -1,0 +1,79 @@
+
+/* Japanese Kanji Master */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    color: #f8fafc;
+    background: linear-gradient(135deg, #101827, #303c60);
+}
+
+button {
+    cursor: pointer;
+    font: inherit;
+}
+
+.welcome {
+    width: min(90%, 480px);
+    margin: 100px auto;
+    padding: 32px;
+    text-align: center;
+    border: 1px solid #ffffff30;
+    border-radius: 24px;
+    background: #ffffff12;
+    box-shadow: 0 20px 60px #00000030;
+}
+
+h1 {
+    color: #a5b4fc;
+}
+
+.welcome form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+    margin-top: 24px;
+}
+
+.welcome label {
+    font-size: 14px;
+    color: #e2e8f0;
+}
+
+.welcome input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ffffff35;
+    border-radius: 10px;
+    color: #ffffff;
+    background: #101827;
+    font-size: 16px;
+}
+
+.welcome button {
+    margin-top: 8px;
+    padding: 13px;
+    border: 0;
+    border-radius: 12px;
+    color: #111827;
+    background: #a5b4fc;
+    font-weight: bold;
+}
+
+.welcome a {
+    color: #c7d2fe;
+}
+
+.error {
+    color: #fecaca;
+}
+
+.success {
+    color: #bbf7d0;
+}
